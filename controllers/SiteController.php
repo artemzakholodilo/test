@@ -49,6 +49,8 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
+        Yii::$app->session->setFlash('contactFormSubmitted');
+
         return $this->render('index');
     }
 

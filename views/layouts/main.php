@@ -24,34 +24,29 @@ AppAsset::register($this);
 
 <?php $this->beginBody() ?>
     <div class="wrap">
-        <?php
-            NavBar::begin([
-                'brandLabel' => 'My Company',
-                'brandUrl' => Yii::$app->homeUrl,
-                'options' => [
-                    'class' => 'navbar-inverse navbar-fixed-top',
-                ],
-            ]);
-            echo Nav::widget([
-                'options' => ['class' => 'navbar-nav navbar-right'],
-                'items' => [
-                    ['label' => 'Home', 'url' => ['/site/index']],
-                    ['label' => 'About', 'url' => ['/site/about']],
-                    ['label' => 'Contact', 'url' => ['/site/contact']],
-                    Yii::$app->user->isGuest ?
-                        ['label' => 'Login', 'url' => ['/site/login']] :
-                        ['label' => 'Logout (' . Yii::$app->user->identity->username . ')',
-                            'url' => ['/site/logout'],
-                            'linkOptions' => ['data-method' => 'post']],
-                ],
-            ]);
-            NavBar::end();
-        ?>
 
         <div class="container">
-            <?= Breadcrumbs::widget([
+            <?=
+            Breadcrumbs::widget([
                 'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-            ]) ?>
+            ])
+            ?>
+                <?php
+                NavBar::begin([
+                    'brandLabel' => 'Test CMS',
+                    'brandUrl' => 'admin/index'
+                ]);
+                
+                
+                echo Nav::widget([
+                    'items' => [
+                        ['label' => 'Suppliers', 'url' => ['/supplier/index']],
+                        ['label' => 'Big products', 'url' => ['/bigproduct/index']],
+                        ['label' => 'Small products', 'url' => ['/smallproduct/index']]
+                    ]
+                ]);
+                
+                NavBar::end(); ?>
             <?= $content ?>
         </div>
     </div>
