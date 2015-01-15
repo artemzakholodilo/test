@@ -1,6 +1,5 @@
 <?php
 use yii\helpers\Html;
-use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
@@ -24,30 +23,57 @@ AppAsset::register($this);
 
 <?php $this->beginBody() ?>
     <div class="wrap">
-
-        <div class="container">
-            <?=
-            Breadcrumbs::widget([
-                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-            ])
-            ?>
+        <div id="navbar-wrapper">
                 <?php
-                NavBar::begin([
-                    'brandLabel' => 'Test CMS',
-                    'brandUrl' => 'admin/index'
-                ]);
-                
-                
-                echo Nav::widget([
+                NavBar::begin();
+                ///if (!isset($this->params['breadcrumbs'])){
+                echo \yii\bootstrap\Tabs::widget([
                     'items' => [
-                        ['label' => 'Suppliers', 'url' => ['/supplier/index']],
-                        ['label' => 'Big products', 'url' => ['/bigproduct/index']],
-                        ['label' => 'Small products', 'url' => ['/smallproduct/index']]
-                    ]
+                        ['label' => 'Suppliers', 
+                            'items' => [
+                                Html::a('view all', ['/supplier/index']),
+                                '<br/>',
+                                Html::a('create', ['/supplier/create'])
+                            ]
+                        ],
+                        ['label' => 'Big products', 
+                            'items' => [
+                                Html::a('view all', ['/bigproduct/index']),
+                                '<br/>',
+                                Html::a('create', ['/bigproduct/create'])
+                            ]
+                        ],
+                        ['label' => 'Small products', 
+                            'items' => [
+                                Html::a('view all', ['/smallproduct/index']),
+                                '<br/>',
+                                Html::a('create', ['/smallproduct/create'])
+                            ]
+                        ]
+                    ],
                 ]);
-                
-                NavBar::end(); ?>
-            <?= $content ?>
+                //}
+                //else{
+                    echo Breadcrumbs::widget([
+                            'links' => isset($this->params['breadcrumbs']) ? 
+                                             $this->params['breadcrumbs'] : 
+                                             []
+                        ]);
+                //}
+                NavBar::end();
+                ?>
+            </div>
+        <div class="container">
+            <div class="col-lg-12">
+                <?php if (Yii::$app->session->hasFlash('supplier')): ?>
+                <div class="alert alert-warning" role="alert">
+                    <?= Yii::$app->session->getFlash('supplier') ?>
+                </div>
+                <?php endif; ?>
+            </div>
+            <div>
+                <?= $content ?>
+            </div>
         </div>
     </div>
 

@@ -10,4 +10,17 @@ $this->title = 'Test CMS | Admin Pannel';
 
 ?>
 
-<h1>Admin panel</h1>
+<h3>Product list</h3>
+
+<table class="table table-striped">
+    <th>Name</th>
+    <th>In stock</th>
+    <?php
+    
+    foreach ($products as $key){
+        echo '<tr><td>' . $key[0] . '</td>';
+        echo '<td>' . $key[1] . '</td></tr>';
+    }
+    
+    ?>
+</table>

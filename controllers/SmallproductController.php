@@ -62,9 +62,20 @@ class SmallproductController extends Controller
     {
         $model = new Smallproduct();
 
-        if ($model->load(Yii::$app->request->post()) && $model->insert(false)) {
+        $post = isset(Yii::$app->request->post()['Smallproduct']) ? 
+                Yii::$app->request->post()['Smallproduct'] : 
+                NULL;
+        
+        if ($post){
+            $model->code = $post['code'];
+            $model->name = $post['name'];
+            $model->instock = $post['instock'];
+            
+            $model->save(false);
+            
             return $this->redirect(['view', 'id' => $model->id]);
-        } else {
+        }
+        else {
             return $this->render('create', [
                 'model' => $model,
             ]);
@@ -81,9 +92,20 @@ class SmallproductController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
+        $post = isset(Yii::$app->request->post()['Smallproduct']) ? 
+                Yii::$app->request->post()['Smallproduct'] : 
+                NULL;
+        
+        if ($post){
+            $model->code = $post['code'];
+            $model->name = $post['name'];
+            $model->instock = $post['instock'];
+            
+            $model->save(false);
+            
             return $this->redirect(['view', 'id' => $model->id]);
-        } else {
+        }
+        else {
             return $this->render('update', [
                 'model' => $model,
             ]);

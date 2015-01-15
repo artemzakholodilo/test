@@ -26,9 +26,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'supplier_id',
             'name',
+            [
+                'attribute' => 'Supplier',
+                'format' => 'raw',
+                'value' => function($model){
+                    return $model->getSupplier()->one()->name;
+                }
+            ],
             'instock',
 
             ['class' => 'yii\grid\ActionColumn'],

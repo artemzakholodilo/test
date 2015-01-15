@@ -25,6 +25,9 @@ class AdminController extends Controller
     }*/
     
     public function actionIndex(){
-        return $this->render('index');
+        $model = new \app\models\General();
+        $products = $model->getProducts();
+        
+        return $this->render('index', ['products' => $products]);
     }
 }

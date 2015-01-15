@@ -29,9 +29,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'supplier_id',
             'name',
             'instock',
+            [
+                'attribute' => 'Supplier',
+                'format' => 'raw',
+                'value' => $model->getSupplier()->one()->name
+            ]
         ],
     ]) ?>
 

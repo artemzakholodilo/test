@@ -30,7 +30,18 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
             'instock',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{view}{delete}',
+                'buttons' => [
+                    'view' => function($url, $model){
+                        return Html::a(
+                                    '<span class="glyphicon glyphicon-eye-open"></span>',
+                                    ['/bigproduct/view?id=' . $model->id]
+                                );
+                    }
+                ]
+            ],
         ],
     ]); ?>
     <?php Pjax::end(); ?>

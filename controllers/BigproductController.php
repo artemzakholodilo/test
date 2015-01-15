@@ -2,6 +2,9 @@
 
 namespace app\controllers;
 
+ini_set("display_errors", 1);
+error_reporting(E_ALL | E_STRICT);
+
 use Yii;
 use app\models\Bigproduct;
 use app\models\BigproductSearch;
@@ -14,13 +17,16 @@ use yii\filters\VerbFilter;
  */
 class BigproductController extends Controller
 {
-    protected $suppliers;
+    protected $suppliers = [];
     
-    public function init(){
-        
-        $this->suppliers = \app\models\Supplier::find()->asArray()->all();
+    public function init() {
+
+        $suppliers = \app\models\Supplier::find()->asArray()->all();
+        foreach ($suppliers as $supplier) {
+            $this->suppliers[$supplier['id']] = $supplier['name'];
+        }
     }
-    
+
     public function behaviors()
     {
         return [
@@ -68,10 +74,27 @@ class BigproductController extends Controller
     public function actionCreate()
     {
         $model = new Bigproduct();
+        $suppliers = \app\models\Supplier::find()->count();
+        
+        if ($suppliers < 1){
+            Yii::$app->session->setFlash('supplier', 'You need create at least one supplier');
+            return $this->goHome();
+        }
 
-        if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
+        $post = isset(Yii::$app->request->post()['Bigproduct']) ? 
+                Yii::$app->request->post()['Bigproduct'] : 
+                NULL;
+        
+        if ($post){
+            $model->supplier_id = $post['supplier_id'];
+            $model->name = $post['name'];
+            $model->instock = $post['instock'];
+            
+            $model->save(false);
+            
             return $this->redirect(['view', 'id' => $model->id]);
-        } else {
+        }
+        else {
             return $this->render('create', [
                 'model' => $model,
                 'suppliers' => $this->suppliers
@@ -88,12 +111,23 @@ class BigproductController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        $post = isset(Yii::$app->request->post()['Bigproduct']) ? 
+                Yii::$app->request->post()['Bigproduct'] : 
+                NULL;
+        
+        if ($post){
+            $model->supplier_id = $post['supplier_id'];
+            $model->name = $post['name'];
+            $model->instock = $post['instock'];
+            
+            $model->save(false);
+            
             return $this->redirect(['view', 'id' => $model->id]);
-        } else {
+        }
+        else {
             return $this->render('update', [
                 'model' => $model,
+                'suppliers' => $this->suppliers
             ]);
         }
     }

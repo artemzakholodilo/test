@@ -46,12 +46,12 @@ class SupplierController extends Controller
      * @param integer $id
      * @return mixed
      */
-    /*public function actionView($id)
+    public function actionView($id)
     {
         return $this->render('view', [
             'model' => $this->findModel($id)
         ]);
-    }*/
+    }
 
     /**
      * Creates a new Supplier model.
@@ -63,7 +63,7 @@ class SupplierController extends Controller
         $model = new Supplier();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,

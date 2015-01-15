@@ -41,14 +41,16 @@ class BigproductSearch extends Bigproduct
      */
     public function search($params, $model = null)
     {
-        if (is_null($model)){
+        if (is_null($model)) {
             $query = Bigproduct::find()->with('supplier');
-        }
-        else{
+        } else {
             $query = $model;
         }
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => 10
+            ],
         ]);
 
         if (!($this->load($params) && $this->validate())) {

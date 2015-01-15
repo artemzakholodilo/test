@@ -10,10 +10,7 @@ $this->title = 'Create Bigproduct';
 $this->params['breadcrumbs'][] = ['label' => 'Bigproducts', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
-$supplier_list = [];
-foreach ($suppliers as $supplier){
-    $supplier_list[$supplier['id']] = $supplier['name'];
-}
+
 ?>
 <div class="bigproduct-create">
 
@@ -21,7 +18,7 @@ foreach ($suppliers as $supplier){
 
     <?= $this->render('_form', [
         'model' => $model,
-        'suppliers' => $supplier_list
+        'suppliers' => $suppliers
     ]) ?>
 
 </div>

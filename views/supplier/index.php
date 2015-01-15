@@ -31,7 +31,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     
                     return Html::a($model->name, ['supplier/bigproducts', ['id' => $model->id]]);
                 }
-            ]
+            ],
+                    
+            ['class' => 'yii\grid\ActionColumn']
         ],
     ]); ?>
 
